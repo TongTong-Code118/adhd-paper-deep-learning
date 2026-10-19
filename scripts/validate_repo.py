@@ -14,9 +14,12 @@ REQUIRED=[
     "configs/copilot-cloud-mcp.json","configs/vscode-mcp.example.json",
     ".github/workflows/test.yml",".github/workflows/copilot-setup-steps.yml",
     "skill/SKILL.md","skill/references/05-visual-design.md",
+    "skill/references/06-interactive-page.md",
+    "skill/scripts/render_study_page.py","skill/assets/study-page-template.html",
     "src/adhd_paper_mcp/server.py","src/adhd_paper_mcp/graphics.py",
     "scripts/sync_platform_skills.py","tests/test_mcp.py",
-    "examples/tool-inputs.json","docs/index.html",
+    "examples/tool-inputs.json","examples/study-page-input.json",
+    "examples/study-page.html","docs/index.html",
 ]
 def validate():
     errors=[]

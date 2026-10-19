@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>__TITLE__ · 论文陪读</title>
+  <style>
+    :root { --ink:#18332f; --muted:#536a65; --bg:#f5f7f2; --paper:#fffefa; --line:#d8e3db; --accent:#176b58; --soft:#e8f3ec; --warm:#fff3da; --focus:#b95017; font-size:18px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; line-height:1.7; }
+    button { font:inherit; cursor:pointer; }
+    :focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+    .skip { position:absolute; left:-9999px; top:0; background:var(--paper); padding:.5rem; z-index:20; }
+    .skip:focus { left:1rem; }
+    .shell { max-width:1250px; margin:auto; min-height:100vh; display:grid; grid-template-columns:260px minmax(0,1fr); }
+    .sidebar { padding:1.7rem 1rem; border-right:1px solid var(--line); background:#eef3ed; }
+    .brand { margin:0 0 .25rem; font-size:.84rem; font-weight:800; letter-spacing:.08em; color:var(--accent); text-transform:uppercase; }
+    .sidebar h1 { font-size:1.18rem; line-height:1.35; margin:.2rem 0 1.2rem; overflow-wrap:anywhere; }
+    .nav-title { font-size:.76rem; font-weight:800; color:var(--muted); margin:1rem .55rem .45rem; }
+    .nav-button { display:flex; gap:.7rem; align-items:flex-start; width:100%; text-align:left; padding:.68rem .75rem; margin:.15rem 0; border:1px solid transparent; border-radius:.72rem; color:var(--ink); background:transparent; line-height:1.4; }
+    .nav-button span { color:var(--accent); font-variant-numeric:tabular-nums; font-weight:800; }
+    .nav-button:hover, .nav-button[aria-current="step"] { background:var(--paper); border-color:var(--line); }
+    .nav-button[aria-current="step"] { box-shadow:inset 4px 0 var(--accent); font-weight:750; }
+    .content { min-width:0; padding:1.3rem clamp(1rem,4vw,3.2rem) 2rem; }
+    .toolbar { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.25rem 0 1.2rem; border-bottom:1px solid var(--line); }
+    .progress-label { font-size:.84rem; font-weight:750; color:var(--muted); }
+    .progress-track { width:min(220px,35vw); height:8px; margin-top:.4rem; border-radius:100px; background:var(--line); overflow:hidden; }
+    .progress-fill { width:0; height:100%; background:var(--accent); }
+    .text-size { border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:.6rem; padding:.35rem .7rem; white-space:nowrap; }
+    .panel { max-width:830px; margin:2rem auto 0; }
+    .panel[hidden] { display:none; }
+    .eyebrow { color:var(--accent); font-size:.78rem; font-weight:850; letter-spacing:.04em; }
+    h2 { font-size:clamp(1.65rem,3.4vw,2.45rem); line-height:1.25; letter-spacing:-.025em; margin:.5rem 0 1rem; }
+    h3 { font-size:1.05rem; line-height:1.4; margin:0 0 .7rem; }
+    p { margin:.45rem 0 .85rem; }
+    .lead { font-size:1.16rem; font-weight:650; line-height:1.6; margin:0 0 1.6rem; }
+    .module, .takeaway { background:var(--paper); border:1px solid var(--line); border-radius:1rem; padding:clamp(1rem,3vw,1.5rem); margin:0 0 1.1rem; }
+    .module ul { margin:.2rem 0 0; padding-left:1.25rem; }
+    .module li { padding:.24rem 0; }
+    .facts { margin:0; }
+    .fact { padding:.55rem 0; border-top:1px solid var(--line); }
+    .fact:first-child { border-top:0; padding-top:0; }
+    .fact:last-child { padding-bottom:0; }
+    dt { color:var(--accent); font-size:.76rem; font-weight:850; letter-spacing:.04em; }
+    dd { margin:.15rem 0 0; overflow-wrap:anywhere; }
+    .takeaway { border-color:#b6d9c2; background:var(--soft); }
+    .takeaway span { color:var(--accent); font-size:.75rem; font-weight:850; }
+    .takeaway p { font-weight:720; font-size:1.12rem; margin:.35rem 0 0; }
+    .evidence { border-left:5px solid var(--accent); }
+    .recall { background:var(--warm); border-color:#ead4a7; }
+    details { margin-top:.8rem; padding:.75rem .9rem; border:1px solid #d7bd80; border-radius:.7rem; background:var(--paper); }
+    summary { font-weight:750; color:var(--accent); cursor:pointer; }
+    .muted, .source-note { color:var(--muted); font-size:.88rem; }
+    .source-note { border-top:1px solid var(--line); padding-top:1rem; margin-top:1.5rem; }
+    .caveat { padding:.8rem 1rem; border-radius:.7rem; background:var(--warm); }
+    .map { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:.75rem; margin-top:1rem; }
+    .map-card { display:flex; flex-direction:column; text-align:left; gap:.2rem; min-height:105px; padding:1rem; border:1px solid var(--line); border-radius:.8rem; background:var(--paper); color:var(--ink); }
+    .map-card:hover { border-color:var(--accent); background:var(--soft); }
+    .map-card strong { line-height:1.35; }
+    .map-card small { color:var(--muted); font-size:.79rem; }
+    .map-number { color:var(--accent); font-weight:850; font-variant-numeric:tabular-nums; }
+    .pager { max-width:830px; margin:1.4rem auto 0; display:flex; justify-content:space-between; gap:1rem; }
+    .pager button { border:1px solid var(--line); border-radius:.7rem; padding:.5rem 1rem; color:var(--ink); background:var(--paper); }
+    .pager button:disabled { cursor:not-allowed; opacity:.48; }
+    @media (max-width:760px) { .shell { display:block; } .sidebar { border-right:0; border-bottom:1px solid var(--line); padding:1rem; } .sidebar h1 { margin-bottom:.4rem; } .nav-title { margin:.5rem 0; } .nav-list { display:flex; overflow-x:auto; gap:.35rem; padding-bottom:.2rem; } .nav-button { flex:0 0 auto; width:auto; max-width:220px; margin:0; font-size:.82rem; } .content { padding:1rem; } .panel { margin-top:1.3rem; } }
+    @media print { :root { font-size:12pt; } body { background:white; } .shell { display:block; } .sidebar,.toolbar,.pager { display:none; } .content { padding:0; } .panel,.panel[hidden] { display:block; break-after:page; max-width:none; } .module,.takeaway { break-inside:avoid; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+  <div class="shell">
+    <aside class="sidebar" aria-label="章节导航">
+      <p class="brand">Paper Focus</p>
+      <h1>__TITLE__</h1>
+      <p class="nav-title">阅读路径</p>
+      <nav class="nav-list" aria-label="章节">
+        <button class="nav-button" type="button" data-target="0" aria-controls="panel-0"><span>00</span>总览</button>
+        __NAV__
+      </nav>
+    </aside>
+    <main class="content" id="main">
+      <div class="toolbar">
+        <div><div class="progress-label" id="progress-label">总览 · 0 / __COUNT__</div><div class="progress-track" role="progressbar" aria-label="阅读进度" aria-valuemin="0" aria-valuemax="__COUNT__" aria-valuenow="0" id="progress"><div class="progress-fill" id="progress-fill"></div></div></div>
+        <button class="text-size" id="text-size" type="button" aria-label="放大文字">文字 A+</button>
+      </div>
+      __PANELS__
+      <div class="pager" aria-label="前后章节"><button id="previous" type="button">← 上一节</button><button id="next" type="button">下一节 →</button></div>
+    </main>
+  </div>
+  <script>
+  (() => {
+    const panels = [...document.querySelectorAll('[data-panel]')];
+    const buttons = [...document.querySelectorAll('[data-target]')];
+    const last = panels.length - 1;
+    const progress = document.getElementById('progress');
+    const fill = document.getElementById('progress-fill');
+    const label = document.getElementById('progress-label');
+    const prev = document.getElementById('previous');
+    const next = document.getElementById('next');
+    let current = 0;
+    function show(index, focus = false) {
+      current = Math.max(0, Math.min(last, index));
+      panels.forEach((p, i) => { p.hidden = i !== current; });
+      buttons.forEach(b => { if (Number(b.dataset.target) === current) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+      label.textContent = `${current === 0 ? '总览' : '第 ' + current + ' 节'} · ${current} / ${last}`;
+      progress.setAttribute('aria-valuenow', String(current));
+      fill.style.width = `${current / last * 100}%`;
+      prev.disabled = current === 0;
+      next.disabled = current === last;
+      if (focus) { panels[current].focus(); window.scrollTo(0, 0); }
+    }
+    buttons.forEach(b => b.addEventListener('click', () => show(Number(b.dataset.target), true)));
+    prev.addEventListener('click', () => show(current - 1, true));
+    next.addEventListener('click', () => show(current + 1, true));
+    const sizes = [18, 21, 24]; let size = 0;
+    document.getElementById('text-size').addEventListener('click', e => {
+      size = (size + 1) % sizes.length;
+      document.documentElement.style.fontSize = sizes[size] + 'px';
+      e.currentTarget.textContent = ['文字 A+', '文字 A++', '文字 A'][size];
+      e.currentTarget.setAttribute('aria-label', size === 2 ? '恢复标准字号' : '放大文字');
+    });
+    show(0);
+  })();
+  </script>
+</body>
+</html>

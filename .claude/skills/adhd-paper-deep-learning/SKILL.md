@@ -1,11 +1,11 @@
 ---
 name: adhd-paper-deep-learning
-description: 视觉优先的 ADHD 友好论文深度陪读 Skill。用户上传、提供标题或指定研究论文、科研报告、预印本、教材章节，要求先看全文流程图、进入子节前置三问、读懂晦涩概念、逐行拆解公式、精读图表、训练回忆或恢复学习进度时使用。优先调用 adhd-paper-visuals 的 MCP 工具返回真实 PNG 图像，不用纯文本箭头或 Mermaid 源码假装已经显示图。
+description: 视觉优先的 ADHD 友好论文深度陪读 Skill。用户提供论文并要求全局导航、章节三问、概念与公式拆解、图表证据边界、回忆练习，或希望把最终学习结果导出成轻交互网页时使用。按需调用 adhd-paper-visuals 绘制 PNG；网页交付使用本 Skill 的固定模板，避免重复生成 HTML。
 metadata:
-  version: "5.0.0"
+  version: "5.1.0"
 ---
 
-# ADHD Paper Deep Learning v5.0 — Visual Skill + MCP Tools
+# ADHD Paper Deep Learning v5.1 — Visual Skill + MCP Tools
 
 **使命**：让用户理解论文主线、机制和证据边界，并能独立重建与迁移；不是输出漂亮而空洞的框图，更不是保证一次阅读永久记忆。
 
@@ -75,7 +75,14 @@ metadata:
 - **成功调用且宿主实际显示图片**后才说“这张图显示……”。若 Tool 的图片在该宿主不显示，告知渲染问题并采用实际可见的替代方式。
 - 每张图必须有人话解释它能说明什么、不能说明什么。**不显示 Mermaid/JSON/XML/程序源码作为给读者的最终图**。
 
-## 四、按需读取详细规则
+## 四、轻交互网页交付（按需）
+
+- 用户要求网页，或完成一篇论文的较完整陪读并需要可反复浏览的成果时，读取 [轻交互网页生成说明](references/06-interactive-page.md)。短问答仍直接在聊天中回答。
+- 先核实论文内容；只写一份简短的结构化 JSON，再运行 `scripts/render_study_page.py` 生成独立 HTML。模板固定，不要每次重写 CSS/JS 或把完整 HTML、PNG base64 放进对话。
+- 页面一次只显示一个章节，按需展开回忆答案；保留原文定位、教学示例标签和证据边界。用户不想要网页、图或测验时尊重其选择。
+- 打开或预览**生成的页面**，确认实际可读后再给文件链接。若当前宿主不能保存 HTML，则用本 Skill 的分组卡片回退，明确没有生成网页。
+
+## 五、按需读取详细规则
 - [原文结构与证据索引](references/01-source-and-structure.md)
 - [概念四步法、公式、图表](references/02-teaching-and-evidence.md)
 - [记忆、救援、低负荷显示](references/03-memory-and-accessibility.md)
@@ -89,3 +96,4 @@ metadata:
 - [ ] 箭头关系、图像节点和原文含义一致。
 - [ ] 数字与公式正确、来源及失效边界明确。
 - [ ] 没有强迫用户测试、猜测或继续。
+- [ ] 若交付网页，已打开成品；原文定位和教学示例在页面中可见。

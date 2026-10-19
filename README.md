@@ -1,7 +1,7 @@
-# ADHD Paper Deep Learning v5.0 🧠
+# ADHD Paper Deep Learning Skill v5.1 🧠
 
 **视觉优先的论文陪读 Skill + 真正可调用的 MCP 图形工具。**  
-支持 GitHub Copilot、Claude Code、Cursor。中文设计，适合需要清楚逻辑地图、短段落、真实算例、证据边界与分层复习的学习场景。
+支持 Codex、GitHub Copilot、Claude Code、Cursor。中文设计，适合需要清楚逻辑地图、短段落、真实算例、证据边界与分层复习的学习场景。
 
 本项目是**双层架构**，不是只有一份提示词：
 
@@ -34,6 +34,18 @@
 
 [查看五张示例图](examples/) · [打开交互演示（HTML）](docs/index.html)（GitHub Pages 可从 `/docs` 发布；静态页面不等于已连接 MCP）
 
+### 可选：把陪读结果保存成轻交互网页
+
+新版 Skill 可在完成较完整的论文陪读后，按需生成一个**独立 HTML 文件**：一次只显示一个章节，带总览导航、字号按钮和可自愿展开的回忆题。页面不依赖网络或第三方前端库。模型只需整理简短 JSON，固定模板负责 HTML/CSS/JS，避免每次重新生成整页代码或把 PNG base64 塞进对话。
+
+[查看教学模拟网页](examples/study-page.html) · [输入示例](examples/study-page-input.json)。本地生成命令：
+
+```bash
+python skill/scripts/render_study_page.py examples/study-page-input.json examples/study-page.html
+```
+
+脚本**不会自行阅读论文或核实事实**；输入内容必须先依据原文检查。短问题仍直接在聊天中回答，不必为每次回答创建网页。
+
 ---
 
 ## 一、最短安装：三步完成本地 Tool 注册
@@ -59,6 +71,7 @@
 
 | 平台 | 可自动发现的项目 Skill | MCP 配置文件 | 是否需要用户操作 |
 |---|---|---|---|
+| **Codex（本地）** | 将 `skill/` 安装到个人 skills 目录 | `~/.codex/config.toml` | 安装本地包、注册 MCP，开启新对话 |
 | **GitHub Copilot（VS Code / CLI）** | `.github/skills/adhd-paper-deep-learning/` | 根目录 `.mcp.json` | 安装本地包、信任项目、开启工具 |
 | **GitHub Copilot cloud agent** | `.github/skills/adhd-paper-deep-learning/` | 手动粘贴 `configs/copilot-cloud-mcp.json` 到仓库设置 | **需要管理员设置**，并使 setup steps 位于默认分支 |
 | **Claude Code** | `.claude/skills/adhd-paper-deep-learning/` | 根目录 `.mcp.json` | 安装包、接受项目 MCP 信任 |
@@ -71,6 +84,12 @@
 - 确认 `.mcp.json` 已被信任；Copilot CLI 可以在工作区 MCP 配置被加载时使用。VS Code 当前支持根目录 `.mcp.json`（旧版本可能只支持 `.vscode/mcp.json`）。
 - 运行 `python -m pip install -e .` 并在 VS Code 命令面板运行 **MCP: List Servers**；应显示 `adhd-paper-visuals`。
 - 在 Chat 中明确提到 Skill 或选择相关论文工作；是否自动选中由模型和产品设置决定。
+
+### Codex（本地）
+
+- 将仓库 `skill/` 整个目录复制为 `~/.codex/skills/adhd-paper-deep-learning/`；不要只复制 `SKILL.md`，网页模板和生成脚本也在目录内。
+- 在仓库根目录执行 `python -m pip install -e .`，再执行 `codex mcp add adhd-paper-visuals -- python -m adhd_paper_mcp`。若 `python` 不是安装包所用的 Python，改用该解释器的绝对路径。
+- 用 `codex mcp list` 检查服务器，再开启新对话。要求网页时说“最后导出轻交互网页”；需要 PNG 图时检查五个绘图工具是否显示。
 
 官方：[GitHub Agent Skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills) · [VS Code MCP 配置](https://code.visualstudio.com/docs/agent-customization/mcp-servers)
 
@@ -207,4 +226,4 @@ git push -u origin main
 
 ---
 
-**版本 v5.0。** 项目内所有示范研究与样本数值均显式区分真实论文和教学模拟；演示图片本身不构成科学证据。
+**Skill v5.1，MCP 绘图服务 v5.0。** 项目内所有示范研究与样本数值均显式区分真实论文和教学模拟；演示图片和网页本身不构成科学证据。
