@@ -19,7 +19,8 @@ REQUIRED=[
     "src/adhd_paper_mcp/server.py","src/adhd_paper_mcp/graphics.py",
     "scripts/sync_platform_skills.py","tests/test_mcp.py",
     "examples/tool-inputs.json","examples/study-page-input.json",
-    "examples/study-page.html","docs/index.html",
+    "examples/study-page.html","examples/assets/demo-figure.png",
+    "examples/assets/demo-table.png","docs/index.html",
 ]
 def validate():
     errors=[]

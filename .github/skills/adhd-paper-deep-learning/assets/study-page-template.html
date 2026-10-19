@@ -23,6 +23,9 @@
     .nav-button span { color:var(--accent); font-variant-numeric:tabular-nums; font-weight:800; }
     .nav-button:hover, .nav-button[aria-current="step"] { background:var(--paper); border-color:var(--line); }
     .nav-button[aria-current="step"] { box-shadow:inset 4px 0 var(--accent); font-weight:750; }
+    .nav-button.depth-2 { padding-left:1.35rem; }
+    .nav-button.depth-3 { padding-left:2rem; }
+    .nav-button.depth-4, .nav-button.depth-5 { padding-left:2.6rem; }
     .content { min-width:0; padding:1.3rem clamp(1rem,4vw,3.2rem) 2rem; }
     .toolbar { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.25rem 0 1.2rem; border-bottom:1px solid var(--line); }
     .progress-label { font-size:.84rem; font-weight:750; color:var(--muted); }
@@ -55,6 +58,19 @@
     .muted, .source-note { color:var(--muted); font-size:.88rem; }
     .source-note { border-top:1px solid var(--line); padding-top:1rem; margin-top:1.5rem; }
     .caveat { padding:.8rem 1rem; border-radius:.7rem; background:var(--warm); }
+    .coverage { padding:.8rem 1rem; border-radius:.7rem; background:var(--soft); color:var(--accent); font-weight:750; }
+    .text-block p { white-space:pre-line; }
+    .source-tag { display:block; color:var(--muted); margin-top:.8rem; overflow-wrap:anywhere; }
+    .original-visual { margin-left:0; margin-right:0; border-left:5px solid var(--accent); }
+    .original-visual img { display:block; max-width:100%; height:auto; margin:.8rem auto 1rem; border:1px solid var(--line); background:white; }
+    .zoom-open { width:100%; border:0; background:transparent; color:var(--accent); font-weight:750; padding:0; }
+    .zoom-open span { display:block; margin:-.35rem 0 .9rem; }
+    .image-viewer { width:min(96vw,1400px); max-height:94vh; padding:1rem; border:1px solid var(--line); border-radius:1rem; background:var(--paper); color:var(--ink); overflow:auto; }
+    .image-viewer::backdrop { background:rgba(13,30,27,.78); }
+    .image-viewer img { display:block; max-width:none; width:auto; height:auto; margin:1rem auto; }
+    .close-viewer { position:sticky; top:0; border:1px solid var(--line); background:var(--paper); border-radius:.6rem; padding:.4rem .7rem; }
+    .original-visual figcaption { white-space:pre-line; font-size:.9rem; color:var(--muted); margin-bottom:1rem; }
+    .visual-label { color:var(--accent); font-weight:850; }
     .map { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:.75rem; margin-top:1rem; }
     .map-card { display:flex; flex-direction:column; text-align:left; gap:.2rem; min-height:105px; padding:1rem; border:1px solid var(--line); border-radius:.8rem; background:var(--paper); color:var(--ink); }
     .map-card:hover { border-color:var(--accent); background:var(--soft); }
@@ -90,6 +106,7 @@
       <div class="pager" aria-label="前后章节"><button id="previous" type="button">← 上一节</button><button id="next" type="button">下一节 →</button></div>
     </main>
   </div>
+  <dialog class="image-viewer" id="image-viewer" aria-label="放大原图原表"><button class="close-viewer" type="button">关闭放大图</button><img alt=""></dialog>
   <script>
   (() => {
     const panels = [...document.querySelectorAll('[data-panel]')];
@@ -122,6 +139,14 @@
       e.currentTarget.textContent = ['文字 A+', '文字 A++', '文字 A'][size];
       e.currentTarget.setAttribute('aria-label', size === 2 ? '恢复标准字号' : '放大文字');
     });
+    const viewer = document.getElementById('image-viewer');
+    document.querySelectorAll('.zoom-open').forEach(button => button.addEventListener('click', () => {
+      const source = button.querySelector('img');
+      const image = viewer.querySelector('img');
+      image.src = source.src; image.alt = source.alt;
+      viewer.showModal(); viewer.querySelector('.close-viewer').focus();
+    }));
+    viewer.querySelector('.close-viewer').addEventListener('click', () => viewer.close());
     show(0);
   })();
   </script>
