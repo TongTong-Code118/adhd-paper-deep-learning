@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "adhd-paper-visuals": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "-m",
+        "adhd_paper_mcp"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

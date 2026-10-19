@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Visual First · ADHD Paper Deep Learning v5.0</title>
+<style>
+:root{--paper:#f8f6f1;--white:#fffefa;--ink:#24424d;--soft:#58707a;--teal:#2f827a;--pale:#e7f2f2;--accent:#d77757;--stroke:#dae3dc;--sand:#f2ede2;--focus:#dcefeb}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);font-family:system-ui,-apple-system,"Noto Sans CJK SC","PingFang SC","Microsoft Yahei",sans-serif;color:var(--ink);line-height:1.65}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.header{max-width:1160px;margin:0 auto;padding:32px 32px 20px;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid var(--stroke)}
+.brand{display:flex;gap:12px;align-items:center;font-size:14px;font-weight:750;letter-spacing:.09em}
+.brandmark{height:38px;width:38px;border-radius:12px;background:var(--ink);color:white;display:grid;place-items:center;font-size:24px}
+.tag{font-size:12px;color:var(--soft);letter-spacing:.08em}
+.frame{max-width:1160px;margin:0 auto;padding:0 32px 85px}
+.hero{padding:65px 0 40px;border-bottom:1px solid var(--stroke)}
+.eyebrow{color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.15em;margin:0 0 13px}
+h1{font-size:clamp(35px,5vw,62px);line-height:1.18;letter-spacing:-.03em;margin:0 0 20px;font-weight:780}
+.hero p{max-width:690px;color:var(--soft);font-size:17px;margin:0 0 20px}
+.pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}
+.pill{background:var(--white);border:1px solid var(--stroke);color:var(--ink);border-radius:999px;padding:9px 14px;font-size:14px;font-weight:600}
+.controls{margin-top:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.control{border:1px solid var(--teal);color:var(--teal);background:transparent;border-radius:10px;padding:9px 15px;cursor:pointer;font:inherit;font-weight:700}
+.control[aria-pressed=true]{background:var(--teal);color:white}
+small{color:var(--soft)}
+section{padding:52px 0;border-bottom:1px solid var(--stroke);scroll-margin-top:22px}
+.section-meta{display:flex;align-items:center;gap:16px;color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.08em}
+.num{height:38px;width:38px;background:var(--pale);border-radius:13px;display:grid;place-items:center;color:var(--teal);font-size:18px}
+h2{font-size:clamp(25px,3.4vw,35px);margin:12px 0 7px;line-height:1.35}
+.lead{font-size:17px;color:var(--soft);margin:0 0 20px;max-width:840px}
+.diagram{background:var(--white);border:1px solid var(--stroke);border-radius:24px;padding:8px;margin:24px 0 18px}
+.diagram a{display:block;border-radius:18px;overflow:hidden}
+.diagram img{display:block;width:100%;height:auto;border-radius:18px}
+.explain{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.note{background:var(--white);border:1px solid var(--stroke);border-radius:15px;padding:18px 20px}
+.note b{color:var(--ink);display:block;margin-bottom:5px}
+.note p{font-size:15px;color:var(--soft);margin:0}
+.note.warn{background:#fff8f0}
+.questions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0}
+.question{background:var(--white);border:1px solid var(--stroke);border-radius:16px;padding:18px}
+.question .qnumber{font-size:12px;color:var(--teal);font-weight:800}
+.question strong{display:block;font-size:17px;margin:4px 0 5px}
+.question p{color:var(--soft);font-size:14px;margin:0}
+.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.lens-button{padding:10px 14px;background:var(--white);color:var(--ink);border:1px solid var(--stroke);border-radius:10px;font:inherit;font-size:14px;cursor:pointer}
+.lens-button[aria-pressed=true]{background:var(--teal);color:white;border-color:var(--teal)}
+.lens-text{padding:20px;margin-top:12px;background:var(--pale);border-radius:16px;min-height:94px;font-size:17px}
+footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--soft);padding-top:28px;font-size:13px}
+.mobile-flow{display:none}
+.mobile-step{background:var(--white);border:1px solid var(--stroke);border-radius:15px;padding:20px;margin:0 0 12px}
+.mobile-step.current{background:var(--pale);border:2px solid var(--teal)}
+.mobile-step span{color:var(--teal);font-weight:800;font-size:12px}
+.mobile-step h3{margin:5px 0 4px;font-size:19px}
+.mobile-step p{color:var(--soft);font-size:14px;margin:0}
+.connector{display:flex;gap:10px;align-items:center;justify-content:center;color:var(--teal);font-size:13px;font-weight:700;padding:3px 0 14px}
+.connector svg{width:21px;height:28px;stroke:var(--teal);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+body[data-density=compact] .optional-detail{display:none}
+@media(max-width:760px){
+ .header{padding:20px}
+ .frame{padding:0 20px 45px}
+ .hero{padding:43px 0 28px}
+ .hero p,.lead{font-size:15px}
+ section{padding:34px 0}
+ .diagram{display:none}
+ .mobile-flow{display:block}
+ .explain,.questions{grid-template-columns:1fr}
+ .tag{display:none}
+ .pill{font-size:13px}
+ .section-meta{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body data-density="full">
+<header class="header">
+  <div class="brand"><span class="brandmark" aria-hidden="true">◇</span><span>PAPER / VISUAL LAB</span></div>
+  <span class="tag">ADHD-FRIENDLY PAPER DEEP LEARNING — V5.0</span>
+</header>
+<main class="frame">
+  <div class="hero">
+    <p class="eyebrow">VISUAL-FIRST · INTERACTIVE EXAMPLE</p>
+    <h1>先看见逻辑。<br>再走进知识。</h1>
+    <p>这才是 Skill 运行时应该呈现的效果：可见的结构图、明确的箭头关系、每一节在全文中的位置，以及不过度推论的图表解释。</p>
+    <div class="pills">
+      <a class="pill" href="#paper-gps">01 · 全局地图</a>
+      <a class="pill" href="#section-entry">02 · 小节逻辑</a>
+      <a class="pill" href="#evidence-lens">03 · 图表三棱镜</a>
+    </div>
+    <div class="controls">
+      <span style="font-weight:700;font-size:14px">阅读密度</span>
+      <button class="control" id="compact" aria-pressed="false">精简</button>
+      <button class="control" id="full" aria-pressed="true">详细</button>
+      <small>可按你的注意力状态切换；不会删除关键来源限制。</small>
+    </div>
+  </div>
+
+  <section id="paper-gps">
+    <div class="section-meta"><span class="num">01</span><span>MACRO / 全篇结构</span></div>
+    <h2>它讲了一条怎样的故事？</h2>
+    <p class="lead">这个演示仅从用户给的截图中取出章节骨架：先解决因子怎么检验，再检验七类因子，最后进入多因子模型。</p>
+    <div class="diagram">
+      <a href="assets/factor-paper-map.svg" aria-label="打开可放大的完整章节流程图">
+        <img loading="eager" src="assets/factor-paper-map.svg" alt="四阶段章节流程图：第二章检验因子，3.1 数据流程，3.2 至 3.8 七类因子，第四章多因子模型；3.1 以青绿色高亮">
+      </a>
+    </div>
+    <div class="mobile-flow" aria-label="手机版论文四阶段图">
+      <div class="mobile-step"><span>01 · 起点</span><h3>第二章：怎样检验因子</h3><p>提出总体任务：因子如何被检验？</p></div>
+      <div class="connector"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1 V23 M5 16 L12 24 L19 16"/></svg>建立方法口径</div>
+      <div class="mobile-step current"><span>02 · 我们现在在这里</span><h3>3.1 数据和流程</h3><p>当时可用的信息、筛选、分组和调仓</p></div>
+      <div class="connector"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1 V23 M5 16 L12 24 L19 16"/></svg>提供可比较的候选证据</div>
+      <div class="mobile-step"><span>03 · 七类候选</span><h3>3.2–3.8 七类因子</h3><p>由来、解释、A 股历史证据</p></div>
+      <div class="connector"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1 V23 M5 16 L12 24 L19 16"/></svg>进入因子组合</div>
+      <div class="mobile-step"><span>04 · 下一步</span><h3>第四章：多因子模型</h3><p>从单个因子的讨论进入组合建模</p></div>
+    </div>
+    <div class="explain">
+      <div class="note"><b>一眼带走</b><p>3.1 的工作是建立检验口径；后面才轮到每类因子的证据和组合讨论。</p></div>
+      <div class="note warn"><b>来源提醒</b><p>截图写“第二章”，但小节写 3.1–3.8。这里保留原貌，并提示对照完整论文核实。</p></div>
+    </div>
+  </section>
+
+  <section id="section-entry">
+    <div class="section-meta"><span class="num">02</span><span>MESO / 章节入口</span></div>
+    <h2>进入 3.1，先弄懂哪四件事？</h2>
+    <div class="questions">
+      <div class="question"><span class="qnumber">QUESTION 01</span><strong>本节要回答什么？</strong><p>什么信息当时可用？怎样筛选、分组和调仓？</p></div>
+      <div class="question"><span class="qnumber">QUESTION 02</span><strong>它在全文做什么？</strong><p>提供检验不同因子时的共同规则。</p></div>
+      <div class="question"><span class="qnumber">QUESTION 03</span><strong>如何承接前文？</strong><p>把“怎样检验”这个总问题变成可执行的环节。</p></div>
+    </div>
+    <div class="diagram">
+      <a href="assets/section-method-flow.svg" aria-label="打开放大的 3.1 流程图">
+        <img loading="lazy" src="assets/section-method-flow.svg" alt="四步方法阅读链：信息可用性、股票筛选、分组方式、调仓规则">
+      </a>
+    </div>
+    <div class="mobile-flow" aria-label="手机端四个方法环节">
+      <div class="mobile-step current"><span>01</span><h3>信息可用性</h3><p>在作决策的那个时间点，能看到哪些信息？</p></div>
+      <div class="connector"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1 V23 M5 16 L12 24 L19 16"/></svg>确定输入</div>
+      <div class="mobile-step"><span>02</span><h3>股票筛选</h3><p>哪些股票符合被检验的条件？</p></div>
+      <div class="connector"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1 V23 M5 16 L12 24 L19 16"/></svg>界定样本</div>
+      <div class="mobile-step"><span>03</span><h3>分组方式</h3><p>按什么条件分组并比较？</p></div>
+      <div class="connector"><svg viewBox="0 0 24 28" aria-hidden="true"><path d="M12 1 V23 M5 16 L12 24 L19 16"/></svg>规定执行</div>
+      <div class="mobile-step"><span>04</span><h3>调仓规则</h3><p>何时调整组合？随后观察什么？</p></div>
+    </div>
+    <p class="lead optional-detail">图中是读懂截图最容易使用的教学顺序，不能替代作者在原文中实际给出的详细回测协议。</p>
+  </section>
+
+  <section id="evidence-lens">
+    <div class="section-meta"><span class="num">03</span><span>MICRO / 证据三棱镜</span></div>
+    <h2>数字不是读完了，就等于理解了。</h2>
+    <p class="lead">这里切换到一个与因子论文无关的虚构测验表格：A 组 70%，B 组 80%。让我们区分直接观测、可信结论和过度推论。</p>
+    <div class="diagram">
+      <a href="assets/evidence-prism.svg" aria-label="查看图表三棱镜大图">
+        <img loading="lazy" src="assets/evidence-prism.svg" alt="三列示意图：看正确率 70% 与 80%；可得差 10 个百分点；不能声称显著性与 ADHD 人群外推">
+      </a>
+    </div>
+    <div class="mobile-flow" aria-label="证据三棱镜移动版">
+      <div class="mobile-step"><span>01 · 看哪里</span><h3>Accuracy 正确率</h3><p>A 组 70%，B 组 80%。</p></div>
+      <div class="mobile-step current"><span>02 · 说明什么</span><h3>高 10 个百分点</h3><p>80% − 70% = 10 个百分点。</p></div>
+      <div class="mobile-step"><span>03 · 不能说明什么</span><h3>不能直接说显著</h3><p>缺少统计检验，也不能推广到所有 ADHD 学习者。</p></div>
+    </div>
+    <div class="toolbar" role="group" aria-label="切换三棱镜讲解">
+      <button class="lens-button" data-lens="look" aria-pressed="true">看哪里</button>
+      <button class="lens-button" data-lens="claim" aria-pressed="false">说明什么</button>
+      <button class="lens-button" data-lens="limit" aria-pressed="false">不能说明什么</button>
+    </div>
+    <div class="lens-text" id="lens-text" role="status" aria-live="polite">先盯住 Accuracy（正确率）这一列：A 组 70%，B 组 80%。不要把组名当结论。</div>
+  </section>
+  <footer><span>ADHD Paper Deep Learning / Visual Demo 4.0</span><span>来源清楚 · 图先于字 · 可以跳过测试 · 不承诺一次永久记忆</span></footer>
+</main>
+<script>
+(() => {
+  const setDensity = value => {
+    document.body.dataset.density = value;
+    for (const id of ["compact","full"])
+      document.getElementById(id).setAttribute("aria-pressed", String(id===value));
+  };
+  document.getElementById("compact").addEventListener("click", () => setDensity("compact"));
+  document.getElementById("full").addEventListener("click", () => setDensity("full"));
+  const lens = {
+    look:"先盯住 Accuracy（正确率）这一列：A 组 70%，B 组 80%。不要把组名当结论。",
+    claim:"这份虚构练习材料显示 B 组比 A 组高 10 个百分点（80% − 70%）。这是描述性结果，不等于已证明原因。",
+    limit:"模拟材料未报告统计检验、误差区间或更广泛的人群证据。不能断言显著提高，更不能推给所有 ADHD 学习者。"
+  };
+  document.querySelectorAll(".lens-button").forEach(b => b.addEventListener("click",() => {
+    for (const btn of document.querySelectorAll(".lens-button"))
+      btn.setAttribute("aria-pressed",String(btn === b));
+    document.getElementById("lens-text").textContent=lens[b.dataset.lens];
+  }));
+})();
+</script>
+</body>
+</html>

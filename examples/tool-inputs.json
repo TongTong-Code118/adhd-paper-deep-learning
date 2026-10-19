@@ -1,0 +1,133 @@
+{
+  "render_paper_map": {
+    "title": "从因子检验走向多因子模型",
+    "subtitle": "从用户截图片段提取的教学路线，不代表已核验全文",
+    "nodes": [
+      {
+        "title": "因子检验任务",
+        "detail": "怎样检验一个因子？",
+        "role": "提出问题"
+      },
+      {
+        "title": "3.1 数据与流程",
+        "detail": "信息可用、筛选、分组、调仓",
+        "role": "检验规则"
+      },
+      {
+        "title": "3.2–3.8 因子",
+        "detail": "七类因子的由来与历史证据",
+        "role": "形成候选"
+      },
+      {
+        "title": "多因子模型",
+        "detail": "从单项到组合建模",
+        "role": "下一阶段"
+      }
+    ],
+    "relationships": [
+      "明确方法",
+      "提供证据",
+      "进入组合"
+    ],
+    "current_index": 1,
+    "source_note": "来源：用户截图。截图写第二章但小节为3.x，章号待核；未提供七类因子的具体名称。"
+  },
+  "render_section_flow": {
+    "section_title": "3.1 数据和流程：阅读路线",
+    "stages": [
+      {
+        "title": "信息可用性",
+        "question": "哪些信息在当时可见？",
+        "purpose": "避免未来数据"
+      },
+      {
+        "title": "股票筛选",
+        "question": "哪些股票参与检验？",
+        "purpose": "明确样本"
+      },
+      {
+        "title": "因子分组",
+        "question": "按照什么规则比较？",
+        "purpose": "统一口径"
+      },
+      {
+        "title": "调仓执行",
+        "question": "何时调整组合？",
+        "purpose": "定义操作"
+      }
+    ],
+    "relationships": [
+      "先定输入",
+      "再确定样本",
+      "最后规定执行"
+    ],
+    "current_index": 0,
+    "source_note": "来源：截图片段3.1。各具体操作先后顺序仅为教学组织，需读完整原文核对。"
+  },
+  "render_concept_diagram": {
+    "concept": "条件概率为何容易被误读？",
+    "everyday_analogy": "图书馆防盗门响，不等于有人真的偷书。正常借出的书也可能忘记消磁。",
+    "mappings": [
+      {
+        "everyday": "防盗门报警",
+        "academic": "AI 标记垃圾邮件",
+        "relationship": "都属于一次阳性警报"
+      },
+      {
+        "everyday": "正常书误响",
+        "academic": "正常邮件误拦",
+        "relationship": "都属于误报"
+      },
+      {
+        "everyday": "真实偷书事件",
+        "academic": "真正垃圾邮件",
+        "relationship": "都是要查找的目标"
+      }
+    ],
+    "mechanism_steps": [
+      "警报中的真垃圾数 = 真垃圾数 × 抓获率",
+      "误报数 = 正常邮件数 × 误报率",
+      "可靠比例 = 真警报 ÷ 所有警报"
+    ],
+    "numeric_example": "[教学示例] 100 封垃圾×90%=90；900 正常×10%=90；真正占比 90÷180=50%。",
+    "analogy_limit": "图书馆报警机制不等于复杂机器学习模型；误报率不是始终固定。",
+    "source_note": "纯教学示例，不属于任何现实邮箱系统或论文原文数据。"
+  },
+  "render_formula_structure": {
+    "title": "Equation (1)：正确率如何计算？",
+    "formula": "Accuracy = C / N × 100%",
+    "symbols": [
+      {
+        "symbol": "C",
+        "meaning": "答对的题数",
+        "unit": "题"
+      },
+      {
+        "symbol": "N",
+        "meaning": "全部作答题数",
+        "unit": "题"
+      },
+      {
+        "symbol": "Accuracy",
+        "meaning": "正确回答的比例",
+        "unit": "%"
+      }
+    ],
+    "steps": [
+      "统计 C = 140",
+      "统计 N = 200",
+      "计算 140 ÷ 200",
+      "乘100%=70%"
+    ],
+    "numeric_example": "[模拟论文] A组 140/200=70%；B组 160/200=80%；差 10 个百分点。",
+    "limitation": "N 不能为 0；两组题目不一致时不可随意比较。",
+    "source_note": "来源：本项目虚构论文 Equation (1) 和 Table 1；非真实学术研究。"
+  },
+  "render_evidence_prism": {
+    "title": "Table 1：分组正确率比较",
+    "look_at": "看 Accuracy 列：A 组 70%，B 组 80%；各组题目总数 200。",
+    "supports": "在这份模拟数据中，B 组比 A 组高 10 个百分点。",
+    "cannot_conclude": "不能声称差异具有统计显著性；也不能由模拟数据推广到 ADHD 人群。",
+    "source_note": "[教学模拟] 数据来自项目 evals 中的虚构论文，而非真实研究。"
+  }
+}

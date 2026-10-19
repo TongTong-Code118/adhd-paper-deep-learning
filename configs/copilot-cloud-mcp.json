@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "adhd-paper-visuals": {
+      "type": "local",
+      "command": "python",
+      "args": [
+        "-m",
+        "adhd_paper_mcp"
+      ],
+      "tools": [
+        "render_paper_map",
+        "render_section_flow",
+        "render_concept_diagram",
+        "render_formula_structure",
+        "render_evidence_prism"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

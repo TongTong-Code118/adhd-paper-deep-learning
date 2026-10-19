@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adhd-paper-visual-mcp"
+version = "5.0.0"
+description = "Cross-platform, source-aware visual paper learning MCP tools"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["Pillow>=10,<13"]
+keywords = ["mcp","agent-skills","academic","adhd","visual-learning"]
+classifiers = ["Programming Language :: Python :: 3", "Topic :: Education"]
+
+[project.scripts]
+adhd-paper-mcp = "adhd_paper_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
