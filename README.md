@@ -203,7 +203,7 @@ git push -u origin main
 - **不会神奇地自动发现所有图**：需要宿主/模型能读取论文 PDF 并调用 MCP；MCP 绘图服务不负责 PDF 解析。
 - **只实现 MCP stdio 的工具子集**：本项目是轻量独立实现，支持常用 MCP 客户端需要的 initialize、ping、tools/list、tools/call 和通知处理；不提供 HTTP、OAuth、resources、prompts 或远程托管。希望加入远端部署可在此基础上迁移到官方 MCP SDK。
 - **隐私**：MCP 工具无网络请求、无写入图像到磁盘的副作用；示范脚本 `scripts/demo.py` 会把图片保存进本地 `examples/`，这是用户显式执行时的行为。
-- **开源许可**：此包未主动为你选择 LICENSE；如果准备向公众授权复制和再分发，可以自行添加 MIT / Apache-2.0 或其他适当许可。
+- **开源许可**：本项目采用 [MIT License](LICENSE)，允许他人使用、修改和再分发，包括商业用途；保留版权和许可声明即可。
 
 ---
 
